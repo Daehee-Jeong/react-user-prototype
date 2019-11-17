@@ -31,7 +31,9 @@ class App extends Component {
     return (
       <div>
         <ApNavbar></ApNavbar>
-        <Button color="danger" onClick={this.toggleLoginModal}>로그인</Button>
+        <div style={{textAlign: "center"}}>
+            <Button color="danger" onClick={this.toggleLoginModal}>로그인</Button>
+        </div>
         <ApLoginModal modal={this.state.loginModal} toggle={this.toggleLoginModal}></ApLoginModal>
       </div>
     );
