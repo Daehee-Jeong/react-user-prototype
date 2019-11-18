@@ -5,25 +5,32 @@ import {
 } from 'reactstrap';
 
 import './App.css';
-import './component/ApNavbar.js';
 
 import ApNavbar from './component/ApNavbar';
-import ApLoginModal from './component/ApLoginModal';
+import ApLoginModal from './component/user/login/ApLoginModal';
+import ApJoinModal from './component/user/join/ApJoinModal';
 
 class App extends Component {
   constructor(props) {
     super(props);
       
     this.state = {
-      loginModal: false
+      loginModal: false,
+      joinModal: false
     }
-
-    this.toggleLoginModal = this.toggleLoginModal.bind(this);
   }
 
   toggleLoginModal = () => {
     this.setState({
-      loginModal: !this.state.loginModal
+      loginModal: !this.state.loginModal,
+      joinModal: false
+    })
+  }
+
+  toggleJoinModal = () => {
+    this.setState({
+      loginModal: false,
+      joinModal: !this.state.joinModal
     })
   }
 
@@ -32,7 +39,8 @@ class App extends Component {
       <div>
         <ApNavbar></ApNavbar>
         <Button color="danger" onClick={this.toggleLoginModal}>로그인</Button>
-        <ApLoginModal modal={this.state.loginModal} toggle={this.toggleLoginModal}></ApLoginModal>
+        <ApLoginModal modal={this.state.loginModal} toggle={this.toggleLoginModal} joinToggle={this.toggleJoinModal}></ApLoginModal>
+        <ApJoinModal modal={this.state.joinModal} toggle={this.toggleJoinModal} loginToggle={this.toggleLoginModal}></ApJoinModal>
       </div>
     );
   }

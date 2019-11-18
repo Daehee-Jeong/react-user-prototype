@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {
     Button, 
-    Modal, 
     ModalHeader, 
     ModalBody, 
     ModalFooter, 
@@ -11,26 +10,23 @@ import {
     Label, 
     Input
 } from 'reactstrap';
-import * as service from '../services/user.js';
 
-class ApLoginModal extends Component {
-
+class ApJoinStep1 extends Component {
     constructor(props) {
         super(props);
-        this.state = { modal: this.props.modal }    
+        this.moveToNextStep = this.props.moveToNextStep;
         this.toggle = this.props.toggle.bind(this);
+    }
 
-        this.state = {
-            idValid: false,
-            idEntered: '',
-            pwValid: false,
-            pwEntered: ''
-        }
+    state = {
+        idValid: false,
+        idEntered: '',
+        pwValid: false,
+        pwEntered: ''
     }
 
     fetchUserId = async (userId) => {
-        const _userId = await service.getUserId(userId);
-        console.log(_userId);
+        console.log(userId);
     }
 
     validateId = (idEntered) => {
@@ -87,31 +83,32 @@ class ApLoginModal extends Component {
     render() {
         return (
             <div>
-                <Modal isOpen={this.props.modal} toggle={this.toggle} className={this.state.className}>
-                <ModalHeader toggle={this.toggle}>로그인</ModalHeader>
+                <ModalHeader toggle={this.toggle}>회원가입</ModalHeader>
                 <ModalBody>
+                <h6>로그인 시 사용하실 이메일 아이디와 비밀번호를 입력해주세요.</h6>
+                <br />
                 <Form>
                     <FormGroup row>
-                        <Label for="exampleEmail" sm={2}>Email</Label>
+                        <Label for="exampleEmail" sm={2}>이메일</Label>
                         <Col sm={10}>
                         <Input 
                             type="email"
                             name="email"
                             id="exampleEmail"
-                            placeholder="이메일 주소를 입력하세요"
+                            placeholder="이메일 입력"
                             valid={this.state.idValid}
                             className={`form-control ${this.inputClassNameHelper(this.isEnteredIdValid())}`}
                             onChange={e => this.validateId(e.target.value)} />
                         </Col>
                     </FormGroup>
                     <FormGroup row>
-                        <Label for="examplePassword" sm={2}>Password</Label>
+                        <Label for="examplePassword" sm={2}>비밀번호</Label>
                         <Col sm={10}>
                         <Input
                             type="password"
                             name="password"
                             id="examplePassword"
-                            placeholder="비밀번호를 입력하세요"
+                            placeholder="비밀번호 입력"
                             className={`form-control ${this.inputClassNameHelper(this.isEnteredPwValid())}`}
                             onChange={e => this.validatePassword(e.target.value)} />
                         </Col>
@@ -119,13 +116,11 @@ class ApLoginModal extends Component {
                 </Form>
                 </ModalBody>
                 <ModalFooter>
-                    <Button color="primary" onClick={ () => {this.fetchUserId('daehee');} }>로그인</Button>{' '}
-                    <Button color="secondary" onClick={this.toggle}>회원가입</Button>
+                    <Button color="primary" onClick={ () => {this.moveToNextStep()} }>다음 (1/3)</Button>{' '}
                 </ModalFooter>
-                </Modal>
             </div>
         )
     }
 }
 
-export default ApLoginModal;
+export default ApJoinStep1;
