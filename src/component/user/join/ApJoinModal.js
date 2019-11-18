@@ -5,7 +5,6 @@ import {
 import ApJoinStep1 from '../../user/join/steps/ApJoinStep1';
 import ApJoinStep2 from '../../user/join/steps/ApJoinStep2';
 import ApJoinStep3 from '../../user/join/steps/ApJoinStep3';
-import { thisTypeAnnotation } from '@babel/types';
 
 class ApJoinModal extends Component {
 
