@@ -5,6 +5,7 @@ import {
 import ApJoinStep1 from '../../user/join/steps/ApJoinStep1';
 import ApJoinStep2 from '../../user/join/steps/ApJoinStep2';
 import ApJoinStep3 from '../../user/join/steps/ApJoinStep3';
+import { thisTypeAnnotation } from '@babel/types';
 
 class ApJoinModal extends Component {
 
@@ -25,9 +26,15 @@ class ApJoinModal extends Component {
             case 1:
                 return <ApJoinStep1 toggle={this.toggle} moveToNextStep={this.moveToNextStep} />;
             case 2:
-                return <ApJoinStep2 toggle={this.toggle} moveToNextStep={this.moveToNextStep} />;
+                return <ApJoinStep2
+                            toggle={this.toggle} 
+                            moveToNextStep={this.moveToNextStep}
+                            moveToPrevStep={this.moveToPrevStep} />;
             case 3:
-                return <ApJoinStep3 toggle={this.toggle} moveToNextStep={this.moveToNextStep} />;
+                return <ApJoinStep3
+                            toggle={this.toggle}
+                            moveToNextStep={this.moveToNextStep}
+                            moveToPrevStep={this.moveToPrevStep} />;
             default:
                 break;
         }
@@ -36,6 +43,12 @@ class ApJoinModal extends Component {
     moveToNextStep = () => {
         this.setState({
             currentStep: this.state.currentStep+1
+        });
+    }
+
+    moveToPrevStep = () => {
+        this.setState({
+            currentStep: this.state.currentStep-1
         });
     }
 

@@ -20,7 +20,18 @@ class ApJoinStep2 extends Component {
     state = {
         phoneNumberValid: false,
         phoneNumberEntered: '',
-        authNumberInputEnabled: false
+        authNumberInputEnabled: false,
+        authNumberEntered: ''
+    }
+
+    moveToPrevStep = () => {
+        this.setState({
+            phoneNumberValid: false,
+            phoneNumberEntered: '',
+            authNumberInputEnabled: false,
+            authNumberEntered: ''
+        });
+        this.props.moveToPrevStep();
     }
 
     isEnteredPhoneNumberValid = () => {
@@ -104,6 +115,7 @@ class ApJoinStep2 extends Component {
                 </Form>
                 </ModalBody>
                 <ModalFooter>
+                    <Button color="link" onClick={this.moveToPrevStep}>이전으로 돌아가기</Button>
                     <Button color="primary" onClick={ () => {this.moveToNextStep()} }>다음 (2/3)</Button>{' '}
                 </ModalFooter>
             </div>

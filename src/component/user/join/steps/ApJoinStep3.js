@@ -31,6 +31,17 @@ class ApJoinStep3 extends Component {
         inputDay: ''
     }
 
+    moveToPrevStep = () => {
+        this.setState({
+            gender: 0,
+            dayList: [],
+            inputYear: '',
+            inputMonth: '',
+            inputDay: ''
+        });
+        this.props.moveToPrevStep();
+    }
+
     setGenderValue = index => {
         this.setState({
             gender: index
@@ -166,6 +177,7 @@ class ApJoinStep3 extends Component {
                     </Form>
                 </ModalBody>
                 <ModalFooter>
+                    <Button color="link" onClick={this.moveToPrevStep}>이전으로 돌아가기</Button>
                     <Button color="primary" onClick={ () => {alert('회원가입 완료!')} }>회원가입 완료</Button>{' '}
                 </ModalFooter>
             </div>
