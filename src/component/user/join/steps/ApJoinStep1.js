@@ -14,7 +14,6 @@ import {
 class ApJoinStep1 extends Component {
     constructor(props) {
         super(props);
-        this.moveToNextStep = this.props.moveToNextStep;
         this.toggle = this.props.toggle.bind(this);
     }
 
@@ -23,6 +22,14 @@ class ApJoinStep1 extends Component {
         idEntered: '',
         pwValid: false,
         pwEntered: ''
+    }
+
+    moveToNextStep = () => {
+        this.props.handler(
+            this.state.idEntered,
+            this.state.pwEntered
+        );
+        this.props.moveToNextStep();
     }
 
     fetchUserId = async (userId) => {
@@ -89,21 +96,20 @@ class ApJoinStep1 extends Component {
                 <br />
                 <Form>
                     <FormGroup row>
-                        <Label for="exampleEmail" sm={2}>이메일</Label>
-                        <Col sm={10}>
+                        <Label for="exampleEmail" sm={3}>이메일</Label>
+                        <Col sm={9}>
                         <Input 
                             type="email"
                             name="email"
                             id="exampleEmail"
                             placeholder="이메일 입력"
-                            valid={this.state.idValid}
                             className={`form-control ${this.inputClassNameHelper(this.isEnteredIdValid())}`}
                             onChange={e => this.validateId(e.target.value)} />
                         </Col>
                     </FormGroup>
                     <FormGroup row>
-                        <Label for="examplePassword" sm={2}>비밀번호</Label>
-                        <Col sm={10}>
+                        <Label for="examplePassword" sm={3}>비밀번호</Label>
+                        <Col sm={9}>
                         <Input
                             type="password"
                             name="password"

@@ -13,15 +13,20 @@ import {
 class ApJoinStep2 extends Component {
     constructor(props) {
         super(props);
-        this.moveToNextStep = this.props.moveToNextStep;
         this.toggle = this.props.toggle.bind(this);
     }
 
     state = {
+        countryCode: '+82',
         phoneNumberValid: false,
         phoneNumberEntered: '',
         authNumberInputEnabled: false,
         authNumberEntered: ''
+    }
+
+    moveToNextStep = () => {
+        this.props.handler(this.state.countryCode.toString() + this.state.phoneNumberEntered.toString());
+        this.props.moveToNextStep();
     }
 
     moveToPrevStep = () => {
@@ -30,8 +35,8 @@ class ApJoinStep2 extends Component {
             phoneNumberEntered: '',
             authNumberInputEnabled: false,
             authNumberEntered: ''
-        });
-        this.props.moveToPrevStep();
+        }, 
+        this.props.moveToPrevStep);
     }
 
     isEnteredPhoneNumberValid = () => {
@@ -80,7 +85,7 @@ class ApJoinStep2 extends Component {
                 <Form>
                     <FormGroup row>
                         <Col sm={3}>
-                            <Input type="select" name="select" id="exampleSelect">
+                            <Input type="select" name="select" id="exampleSelect" defaultValue={'+82'} onChange={e => console.log(e.target.value)}>
                                 <option>+82</option>
                                 <option>+83</option>
                                 <option>+84</option>
@@ -92,7 +97,6 @@ class ApJoinStep2 extends Component {
                                 name="text"
                                 id="exampleText"
                                 placeholder="전화번호를 입력하세요"
-                                valid={this.state.idValid}
                                 className={`form-control ${this.inputClassNameHelper(this.isEnteredPhoneNumberValid())}`}
                                 onChange={e => this.validatePhoneNumber(e.target.value)} />
                         </Col>
@@ -116,7 +120,7 @@ class ApJoinStep2 extends Component {
                 </ModalBody>
                 <ModalFooter>
                     <Button color="link" onClick={this.moveToPrevStep}>이전으로 돌아가기</Button>
-                    <Button color="primary" onClick={ () => {this.moveToNextStep()} }>다음 (2/3)</Button>{' '}
+                    <Button color="primary" onClick={ this.moveToNextStep}>다음 (2/3)</Button>{' '}
                 </ModalFooter>
             </div>
         )

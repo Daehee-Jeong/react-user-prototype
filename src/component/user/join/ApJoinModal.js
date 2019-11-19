@@ -15,25 +15,71 @@ class ApJoinModal extends Component {
         this.loginToggle = this.props.loginToggle.bind(this);
 
         this.state = {
-            currentStep: 1
+            currentStep: 1,
+            userEmail: '',
+            userPassword: '',
+            userPhoneNumber: '',
+            userGender: '',
+            userBirthday: '',
+            userPrivacyAgreement: false,
+            userUseAgreement: false,
+            userMigrationAgreement: false,
+            userMarketingAgreement: false
         }
     }
 
+    setLoginInformation = (userEmail, userPassword) => {
+        this.setState({
+            userEmail,
+            userPassword
+        });
+    }
+
+    setPhoneNumber = (userPhoneNumber) => {
+        console.log('userPhoneNumber: ' + userPhoneNumber);
+        this.setState({ userPhoneNumber });
+    }
+
+    setPrivateInformation = (userGender,
+                            userBirthday,
+                            userPrivacyAgreement,
+                            userUseAgreement,
+                            userMigrationAgreement,
+                            userMarketingAgreement) => {
+        this.setState({
+            userGender,
+            userBirthday,
+            userPrivacyAgreement,
+            userUseAgreement,
+            userMigrationAgreement,
+            userMarketingAgreement
+        }, 
+        this.completeJoin);
+    }
+
+    completeJoin = () => {
+        alert('완료: ' + JSON.stringify(this.state));
+    }
+
     renderStep = index => {
-        console.log(index);
         switch(index) {
             case 1:
-                return <ApJoinStep1 toggle={this.toggle} moveToNextStep={this.moveToNextStep} />;
+                return <ApJoinStep1 
+                            toggle={this.toggle}
+                            moveToNextStep={this.moveToNextStep}
+                            handler={this.setLoginInformation} />;
             case 2:
                 return <ApJoinStep2
                             toggle={this.toggle} 
                             moveToNextStep={this.moveToNextStep}
-                            moveToPrevStep={this.moveToPrevStep} />;
+                            moveToPrevStep={this.moveToPrevStep}
+                            handler={this.setPhoneNumber} />;
             case 3:
                 return <ApJoinStep3
                             toggle={this.toggle}
                             moveToNextStep={this.moveToNextStep}
-                            moveToPrevStep={this.moveToPrevStep} />;
+                            moveToPrevStep={this.moveToPrevStep}
+                            handler={this.setPrivateInformation} />;
             default:
                 break;
         }

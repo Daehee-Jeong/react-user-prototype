@@ -15,7 +15,6 @@ import {
 class ApJoinStep3 extends Component {
     constructor(props) {
         super(props);
-        this.moveToNextStep = this.props.moveToNextStep;
         this.toggle = this.props.toggle.bind(this);
 
         const year = (new Date()).getFullYear();
@@ -28,7 +27,24 @@ class ApJoinStep3 extends Component {
         dayList: [],
         inputYear: '',
         inputMonth: '',
-        inputDay: ''
+        inputDay: '',
+        agree1: false,
+        agree2: false,
+        agree3: false,
+        agree4: false
+    }
+
+    completeJoin = () => {
+        this.props.handler(
+            this.state.gender,
+            this.state.inputYear 
+                + '/' + (this.state.inputMonth < 10 ? '0' + this.state.inputMonth.toString() : this.state.inputMonth.toString())
+                + '/' + (this.state.inputDay < 10 ? '0' + this.state.inputDay.toString() : this.state.inputDay.toString()),
+            this.state.agree1,
+            this.state.agree2,
+            this.state.agree3,
+            this.state.agree4
+        );
     }
 
     moveToPrevStep = () => {
@@ -38,8 +54,8 @@ class ApJoinStep3 extends Component {
             inputYear: '',
             inputMonth: '',
             inputDay: ''
-        });
-        this.props.moveToPrevStep();
+        }, 
+        this.props.moveToPrevStep());
     }
 
     setGenderValue = index => {
@@ -49,13 +65,13 @@ class ApJoinStep3 extends Component {
     }
 
     onChangeYear = (inputYear) => {
-        this.setState({inputYear});
-        this.refreshDayList();
+        this.setState({inputYear}, 
+            this.refreshDayList);
     }
 
     onChangeMonth = (inputMonth) => {
-        this.setState({inputMonth});
-        this.refreshDayList();
+        this.setState({inputMonth}, 
+            this.refreshDayList);
     }
 
     onChangeDay = (inputDay) => {
@@ -152,25 +168,25 @@ class ApJoinStep3 extends Component {
                         <br />
                         <FormGroup check>
                             <Label check>
-                            <Input type="checkbox" />{' '}
+                            <Input type="checkbox" onChange={e => this.setState({agree1: e.target.checked})}/>{' '}
                             (필수) 개인 정보 수급 동의
                             </Label>
                         </FormGroup>
                         <FormGroup check>
                             <Label check>
-                            <Input type="checkbox" />{' '}
+                            <Input type="checkbox" onChange={e => this.setState({agree2: e.target.checked})}/>{' '}
                             (필수) 에어프레미아 일반규정 및 홈페이지 이용약관동의
                             </Label>
                         </FormGroup>
                         <FormGroup check>
                             <Label check>
-                            <Input type="checkbox" />{' '}
+                            <Input type="checkbox" onChange={e => this.setState({agree3: e.target.checked})}/>{' '}
                             (필수) 개인정보 국외 이전 동의
                             </Label>
                         </FormGroup>
                         <FormGroup check>
                             <Label check>
-                            <Input type="checkbox" />{' '}
+                            <Input type="checkbox" onChange={e => this.setState({agree4: e.target.checked})}/>{' '}
                             (선택) 마케팅 수신 동의
                             </Label>
                         </FormGroup>
@@ -178,7 +194,7 @@ class ApJoinStep3 extends Component {
                 </ModalBody>
                 <ModalFooter>
                     <Button color="link" onClick={this.moveToPrevStep}>이전으로 돌아가기</Button>
-                    <Button color="primary" onClick={ () => {alert('회원가입 완료!')} }>회원가입 완료</Button>{' '}
+                    <Button color="primary" onClick={this.completeJoin}>회원가입 완료</Button>{' '}
                 </ModalFooter>
             </div>
         )
